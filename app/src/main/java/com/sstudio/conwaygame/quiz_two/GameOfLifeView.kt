@@ -41,6 +41,10 @@ class GameOfLifeView @JvmOverloads constructor(
     private var aliveColor: Int = DEFAULT_CELL_ALIVE_COLOR
     private var deadColor: Int = DEFAULT_CELL_DEAD_COLOR
 
+    // Flag for playing / pausing game
+    var isPlaying: Boolean = true
+        private set
+
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         // Init world if haven't do so
         if (!::world.isInitialized) {
@@ -54,21 +58,43 @@ class GameOfLifeView @JvmOverloads constructor(
         // Draw current generation to canvas
         drawCell(canvas)
 
-        // After draw, switch to next generation
-        switchToNextGeneration()
+        // After draw, if it's still playing, switch to next generation.
+        if (isPlaying) {
+            switchToNextGeneration()
+        }
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        if (event.action == MotionEvent.ACTION_DOWN) {
-            // Get the corresponding coordinates of cell based on touch event
-            val xIndex = (event.x / cellSize).toInt()
-            val yIndex = (event.y / cellSize).toInt()
-            val cell = world.getCell(xIndex = xIndex, yIndex = yIndex)
+        if (isPlaying) {
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                // Get the corresponding coordinates of cell based on touch event
+                val xIndex = (event.x / cellSize).toInt()
+                val yIndex = (event.y / cellSize).toInt()
+                val cell = world.getCell(xIndex = xIndex, yIndex = yIndex)
 
-            // Make the touched cell alive
-            cell?.isAlive = true
+                // Make the touched cell alive
+                cell?.isAlive = true
+            }
         }
         return super.onTouchEvent(event)
+    }
+
+    /**
+     * Pause game by changing [isPlaying] to false.
+     */
+    fun pause() {
+        isPlaying = false
+    }
+
+    /**
+     * Play game by changing [isPlaying] to true, and
+     * invoke [switchToNextGeneration] to next generation.
+     */
+    fun play() {
+        isPlaying = true
+        // The previous generation is drawn already, so
+        // here we can switch to next generation when continue.
+        switchToNextGeneration()
     }
 
     /**
