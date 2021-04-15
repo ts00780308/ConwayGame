@@ -6,4 +6,10 @@
         <item name="iconGravity">textStart</item>
         <item name="iconPadding">0dp</item>
     </style>
+
+    <style name="Widget.MyStyle.GameOfLife" parent="">
+        <item name="cell_size">20</item>
+        <item name="cell_alive_color">@android:color/darker_gray</item>
+        <item name="cell_dead_color">@android:color/black</item>
+    </style>
 </resources>

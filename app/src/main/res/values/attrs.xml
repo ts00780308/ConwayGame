@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="GameOfLiveViewStyle" format="reference"/>
+
+    <declare-styleable name="GameOfLifeView">
+        <attr name="cell_size" format="integer"/>
+        <attr name="cell_alive_color" format="color"/>
+        <attr name="cell_dead_color" format="color"/>
+    </declare-styleable>
+</resources>

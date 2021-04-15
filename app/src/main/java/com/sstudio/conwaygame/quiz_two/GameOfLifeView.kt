@@ -8,6 +8,7 @@ import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import com.sstudio.conwaygame.R
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -16,13 +17,15 @@ import kotlin.random.Random
 class GameOfLifeView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
+    defStyleAttr: Int = R.attr.GameOfLiveViewStyle
 ) : View(context, attrs, defStyleAttr) {
 
     companion object {
         private const val TAG = "GameOfLifeView"
         // Default edge size of conway cell
         private const val DEFAULT_EVOLUTION_PER_SECOND = 2
+
+        // Default values of custom attributes
         private const val DEFAULT_CELL_SIZE = 30
         private const val DEFAULT_CELL_ALIVE_COLOR = Color.BLACK
         private const val DEFAULT_CELL_DEAD_COLOR = Color.WHITE
@@ -30,6 +33,7 @@ class GameOfLifeView @JvmOverloads constructor(
 
     private lateinit var world: ConwayWorld
 
+    // Variable for drawing
     private val rect = Rect()
     private val paint = Paint()
 
@@ -37,13 +41,23 @@ class GameOfLifeView @JvmOverloads constructor(
     private var elevationRate: Int = DEFAULT_EVOLUTION_PER_SECOND
     // The milliseconds per generation last
     private var generationPeriod: Long = 1000L / elevationRate
-    private var cellSize: Int = DEFAULT_CELL_SIZE
-    private var aliveColor: Int = DEFAULT_CELL_ALIVE_COLOR
-    private var deadColor: Int = DEFAULT_CELL_DEAD_COLOR
+
+    // Custom attributes
+    private var cellSize: Int
+    private var aliveColor: Int
+    private var deadColor: Int
 
     // Flag for playing / pausing game
     var isPlaying: Boolean = true
         private set
+
+    init {
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.GameOfLifeView, defStyleAttr, 0)
+        aliveColor = typedArray.getColor(R.styleable.GameOfLifeView_cell_alive_color, DEFAULT_CELL_ALIVE_COLOR)
+        deadColor = typedArray.getColor(R.styleable.GameOfLifeView_cell_dead_color, DEFAULT_CELL_DEAD_COLOR)
+        cellSize = typedArray.getInt(R.styleable.GameOfLifeView_cell_size, DEFAULT_CELL_SIZE)
+        typedArray.recycle()
+    }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         // Init world if haven't do so

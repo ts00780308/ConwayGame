@@ -15,7 +15,10 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/play_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:cell_alive_color="@color/cell_alive"
+        app:cell_dead_color="@color/cell_dead"
+        app:cell_size="20" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/play_button"

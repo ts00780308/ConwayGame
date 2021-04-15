@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="button_primary">#4D8AFF</color>
+    <color name="cell_alive">#4D8AFF</color>
+    <color name="cell_dead">@color/black</color>
 </resources>
