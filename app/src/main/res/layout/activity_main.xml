@@ -27,8 +27,34 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/common_space_16"
         app:icon="@android:drawable/ic_media_pause"
-        app:backgroundTint="@color/button_primary"
+        app:backgroundTint="@color/app_primary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <SeekBar
+        android:id="@+id/ratio_seek_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common_space_16"
+        android:layout_marginEnd="@dimen/common_space_16"
+        android:paddingVertical="@dimen/common_space_8"
+        android:max="@integer/max_evolution_rate"
+        android:thumbTint="@color/app_primary"
+        android:progress="@integer/default_evolution_rate"
+        app:layout_constraintTop_toBottomOf="@id/game_of_life_view"
+        app:layout_constraintBottom_toTopOf="@id/ratio_text"
+        app:layout_constraintStart_toEndOf="@id/play_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"/>
+
+    <TextView
+        android:id="@+id/ratio_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/ratio_seek_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/ratio_seek_bar"
+        app:layout_constraintEnd_toEndOf="@id/ratio_seek_bar"
+        tools:text="每秒 2 回合"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

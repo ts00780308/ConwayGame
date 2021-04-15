@@ -22,11 +22,7 @@ class GameOfLifeView @JvmOverloads constructor(
 
     companion object {
         private const val TAG = "GameOfLifeView"
-        // Default edge size of conway cell
-        private const val DEFAULT_EVOLUTION_PER_SECOND = 2
-
         // Default values of custom attributes
-        private const val DEFAULT_CELL_SIZE = 30
         private const val DEFAULT_CELL_ALIVE_COLOR = Color.BLACK
         private const val DEFAULT_CELL_DEAD_COLOR = Color.WHITE
     }
@@ -38,9 +34,9 @@ class GameOfLifeView @JvmOverloads constructor(
     private val paint = Paint()
 
     // The rounds of generation in a second
-    private var elevationRate: Int = DEFAULT_EVOLUTION_PER_SECOND
+    private var evolutionRate: Int
     // The milliseconds per generation last
-    private var generationPeriod: Long = 1000L / elevationRate
+    private var generationPeriod: Long
 
     // Custom attributes
     private var cellSize: Int
@@ -52,10 +48,16 @@ class GameOfLifeView @JvmOverloads constructor(
         private set
 
     init {
+        // Get default integers
+        evolutionRate = context.resources.getInteger(R.integer.default_evolution_rate)
+        generationPeriod = 1000L / evolutionRate
+        val defaultCellSize = context.resources.getInteger(R.integer.default_cell_size)
+
+        // Get custom attributes
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.GameOfLifeView, defStyleAttr, 0)
         aliveColor = typedArray.getColor(R.styleable.GameOfLifeView_cell_alive_color, DEFAULT_CELL_ALIVE_COLOR)
         deadColor = typedArray.getColor(R.styleable.GameOfLifeView_cell_dead_color, DEFAULT_CELL_DEAD_COLOR)
-        cellSize = typedArray.getInt(R.styleable.GameOfLifeView_cell_size, DEFAULT_CELL_SIZE)
+        cellSize = typedArray.getInt(R.styleable.GameOfLifeView_cell_size, defaultCellSize)
         typedArray.recycle()
     }
 
@@ -109,6 +111,16 @@ class GameOfLifeView @JvmOverloads constructor(
         // The previous generation is drawn already, so
         // here we can switch to next generation when continue.
         switchToNextGeneration()
+    }
+
+    /**
+     * Set evolution rate dynamically.
+     *
+     * @param rate the rounds per second.
+     */
+    fun setEvolutionRate(rate: Int) {
+        evolutionRate = rate
+        generationPeriod = 1000L / evolutionRate
     }
 
     /**

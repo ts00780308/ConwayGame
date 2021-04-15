@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="max_evolution_rate">10</integer>
+    <integer name="default_evolution_rate">2</integer>
+    <integer name="default_cell_size">30</integer>
+</resources>
