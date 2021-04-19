@@ -2,6 +2,7 @@ package com.sstudio.conwaygame.quiz_two
 
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -38,10 +39,15 @@ class ConwayWorldTest {
 
     @Test
     fun testGetCell() {
+        // Valid case
         val cell = world.getCell(0, 0)
         assertEquals(0, cell?.xIndex)
         assertEquals(0, cell?.yIndex)
         assertEquals(true, cell?.isAlive)
+
+        // Invalid case
+        val nullCell = world.getCell(-1, 4)
+        assertNull(nullCell)
     }
 
     @Test
