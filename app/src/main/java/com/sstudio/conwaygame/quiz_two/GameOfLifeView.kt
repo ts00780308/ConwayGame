@@ -187,7 +187,9 @@ class GameOfLifeView @JvmOverloads constructor(
             delay(generationPeriod)
 
             // Call invalidate() to draw next generation
-            invalidate()
+            if (isAttachedToWindow) {
+                invalidate()
+            }
         }
     }
 }
